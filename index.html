@@ -20,8 +20,9 @@
 
   /* News Section */
   .news-section{margin-top:40px; max-width:800px; margin-left:auto;margin-right:auto;}
-  .news-item{background:white;padding:12px;margin-bottom:12px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;}
+  .news-item{display:flex;align-items:center; background:white;padding:10px;margin-bottom:12px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;transition:0.2s;}
   .news-item:hover{background:#eef4ff;}
+  .news-thumb{width:80px;height:60px;object-fit:cover;border-radius:6px;margin-right:15px;}
   .title{font-size:16px;font-weight:bold;}
 </style>
 </head>
@@ -122,7 +123,7 @@ function startLoader(url){
   },1500);
 }
 
-// Load news via serverless API
+// Load news via serverless API with thumbnails
 async function loadNews(){
   const container=document.getElementById("newsList");
   try{
@@ -132,7 +133,8 @@ async function loadNews(){
     articles.forEach(item=>{
       const li=document.createElement("li");
       li.className="news-item";
-      li.innerHTML=`<div class="title">${item.title}</div>`;
+      const thumbnail = item.urlToImage ? item.urlToImage : "https://via.placeholder.com/80x60.png?text=No+Image";
+      li.innerHTML=`<img class="news-thumb" src="${thumbnail}" alt="thumbnail"><div class="title">${item.title}</div>`;
       li.onclick=()=>window.open(item.url,"_blank");
       container.appendChild(li);
     });
