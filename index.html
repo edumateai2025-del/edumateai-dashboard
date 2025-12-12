@@ -7,14 +7,12 @@
 <style>
   body { margin:0; padding:0; font-family:Arial,sans-serif; background:#f3f6fa; }
   h2 { text-align:center; margin-top:20px; }
-  
   .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:20px; padding:20px; }
-  
   .card { background:white; border-radius:12px; padding:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; cursor:pointer; transition:0.3s; }
-  .card:hover { transform:scale(1.05); box-shadow:0 6px 18px rgba(0,0,0,0.15); }
+  .card:hover { transform:scale(1.05); }
   .card img { width:100%; border-radius:10px; height:120px; object-fit:cover; }
   .card-title { margin-top:10px; font-size:16px; font-weight:bold; }
-  .card-desc { font-size:14px; color:#555; margin-top:5px; }
+  .card-desc { font-size:13px; color:#555; margin-top:5px; }
 
   /* LOADER OVERLAY */
   #loaderOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(3px); z-index:9999; justify-content:center; align-items:center; flex-direction:column; }
@@ -22,9 +20,8 @@
 
   /* News Section */
   .news-section{margin-top:40px; max-width:800px; margin-left:auto;margin-right:auto;}
-  .news-item{display:flex;align-items:center;background:white;padding:12px;margin-bottom:12px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;transition:0.2s;}
+  .news-item{background:white;padding:12px;margin-bottom:12px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;}
   .news-item:hover{background:#eef4ff;}
-  .news-item img{width:80px;height:60px;border-radius:6px;object-fit:cover;margin-right:12px;}
   .title{font-size:16px;font-weight:bold;}
 </style>
 </head>
@@ -35,16 +32,16 @@
 <div class="grid">
   <!-- Smart Tutor -->
   <div class="card" onclick="startLoader('https://edumateai-smarttutor01.vercel.app/')">
-    <img src="https://i.postimg.cc/qq5CRVDM/file-00000000197871f494a6abf3eb579e17.png" alt="Smart Tutor">
+    <img src="https://i.postimg.cc/qq5CRVDM/file-00000000197871f494a6abf3eb579e17.png">
     <div class="card-title">Smart Tutor</div>
     <div class="card-desc">Interactive lessons and learning modules to boost your skills.</div>
   </div>
 
   <!-- Quiz Generator -->
   <div class="card" onclick="startLoader('https://quiz-generator-pink.vercel.app/')">
-    <img src="https://i.ibb.co/1tDvHSsX/file-000000006c6871f4a2d165b66d383516.png" alt="Quiz Generator">
+    <img src="https://i.ibb.co/1tDvHSsX/file-000000006c6871f4a2d165b66d383516.png">
     <div class="card-title">Quiz Generator</div>
-    <div class="card-desc">Generate quizzes to test your knowledge anytime.</div>
+    <div class="card-desc">Generate quizzes and test your knowledge anytime.</div>
   </div>
 </div>
 
@@ -61,6 +58,13 @@
 </div>
 
 <script>
+// Reset loader when page is shown again
+window.addEventListener("pageshow", () => {
+  const overlay = document.getElementById("loaderOverlay");
+  overlay.style.display = "none";
+  document.getElementById("loaderMessage").textContent = "Please wait...";
+});
+
 // Chemical bonding loader
 function startLoader(url){
   const overlay=document.getElementById('loaderOverlay');
@@ -71,8 +75,8 @@ function startLoader(url){
   const width=canvas.width;
   const height=canvas.height;
 
-  let red={x:90,y:height/2,vx:4,color:'red'};
-  let blue={x:160,y:height/2,vx:-4,color:'blue'};
+  let red={x:90,y:height/2,vx:3.8,color:'red'};
+  let blue={x:160,y:height/2,vx:-3.8,color:'blue'};
   const radius=15;
 
   function drawBall(ball){
@@ -128,7 +132,7 @@ async function loadNews(){
     articles.forEach(item=>{
       const li=document.createElement("li");
       li.className="news-item";
-      li.innerHTML=`<img src="${item.urlToImage || 'https://i.ibb.co/1tDvHSsX/file-000000006c6871f4a2d165b66d383516.png'}"><div class="title">${item.title}</div>`;
+      li.innerHTML=`<div class="title">${item.title}</div>`;
       li.onclick=()=>window.open(item.url,"_blank");
       container.appendChild(li);
     });
