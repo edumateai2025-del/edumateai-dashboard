@@ -1,61 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduMateAI Dashboard</title>
 <style>
   body { margin:0; padding:0; font-family:Arial,sans-serif; background:#f3f6fa; }
-  h2 { text-align:center; margin-top:20px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; padding:20px; }
-  .card { background:white; border-radius:12px; padding:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; cursor:pointer; transition:0.2s; }
-  .card:hover { transform:scale(1.05); }
-  .card img { width:100%; border-radius:10px; height:120px; object-fit:cover; }
-  .card-title { margin-top:10px; font-size:16px; font-weight:bold; }
+  h2 { text-align:center; margin-top:20px; }/* GRID */ .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:25px; padding:20px; max-width:900px; margin:auto; } .card { background:white; border-radius:16px; padding:15px; box-shadow:0 6px 18px rgba(0,0,0,0.12); text-align:center; cursor:pointer; transition:0.25s; position:relative; overflow:hidden; } .card:hover { transform:translateY(-5px) scale(1.03); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
 
-  /* LOADER OVERLAY */
-  #loaderOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(3px); z-index:9999; justify-content:center; align-items:center; flex-direction:column; }
-  #loaderMessage { color:white; font-size:18px; margin-top:10px; font-weight:600; }
+/* Floating animation */ .card img { width:100%; border-radius:12px; height:130px; object-fit:cover; animation: float 3s ease-in-out infinite; } @keyframes float { 0% { transform:translateY(0px); } 50% { transform:translateY(-6px); } 100% { transform:translateY(0px); } }
 
-  /* News Section */
-  .news-section{margin-top:40px; max-width:800px; margin-left:auto;margin-right:auto;}
-  .news-item{background:white;padding:12px;margin-bottom:12px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;}
-  .news-item:hover{background:#eef4ff;}
-  .title{font-size:16px;font-weight:bold;}
-</style>
+.card-title { margin-top:10px; font-size:17px; font-weight:bold; } .card-desc { margin-top:5px; font-size:14px; opacity:0.7; }
+
+/* LOADER OVERLAY */ #loaderOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(3px); z-index:9999; justify-content:center; align-items:center; flex-direction:column; } #loaderMessage { color:white; font-size:18px; margin-top:10px; font-weight:600; }
+
+/* News Section */ .news-section{margin-top:40px; max-width:800px; margin-left:auto;margin-right:auto;} .news-item{background:white;padding:12px;margin-bottom:12px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;transition:0.2s;} .news-item:hover{background:#eef4ff; transform:scale(1.01); } .title{font-size:16px;font-weight:bold;} </style>
+
 </head>
-<body>
-
-<h2>EduMateAI Dashboard</h2>
-
-<div class="grid">
+<body><h2>EduMateAI Dashboard</h2><div class="grid">
   <!-- Smart Tutor -->
   <div class="card" onclick="startLoader('https://edumateai-smarttutor01.vercel.app/')">
     <img src="https://i.postimg.cc/qq5CRVDM/file-00000000197871f494a6abf3eb579e17.png">
     <div class="card-title">Smart Tutor</div>
-  </div>
-
-  <!-- Quiz Generator -->
-  <div class="card" onclick="startLoader('https://quiz-generator-pink.vercel.app/')">
+    <div class="card-desc">Explain topics, solve problems & study faster.</div>
+  </div>  <!-- Quiz Generator -->  <div class="card" onclick="startLoader('https://quiz-generator-pink.vercel.app/')">
     <img src="https://i.ibb.co/1tDvHSsX/file-000000006c6871f4a2d165b66d383516.png">
     <div class="card-title">Quiz Generator</div>
+    <div class="card-desc">Instant quizzes from any topic—test yourself.</div>
   </div>
-</div>
-
-<!-- News Section -->
-<div class="news-section">
+</div><!-- News Section --><div class="news-section">
   <h2>Latest News</h2>
   <ul id="newsList"><p>Loading news...</p></ul>
-</div>
-
-<!-- LOADER -->
-<div id="loaderOverlay">
+</div><!-- LOADER --><div id="loaderOverlay">
   <canvas id="loaderCanvas" width="250" height="200"></canvas>
   <p id="loaderMessage">Please wait...</p>
-</div>
-
-<script>
-// Chemical bonding loader
+</div><script>
 function startLoader(url){
   const overlay=document.getElementById('loaderOverlay');
   overlay.style.display='flex';
@@ -102,17 +80,14 @@ function startLoader(url){
   }
   draw();
 
-  // Weak internet warning after 3s
   const slowTimer=setTimeout(()=>{ document.getElementById("loaderMessage").textContent="⚠️ Weak internet detected..."; },3000);
 
-  // Redirect fast 1.5s
   setTimeout(()=>{
     clearTimeout(slowTimer);
     window.location.href=url;
   },1500);
 }
 
-// Load news via serverless API
 async function loadNews(){
   const container=document.getElementById("newsList");
   try{
@@ -131,7 +106,5 @@ async function loadNews(){
   }
 }
 loadNews();
-</script>
-
-</body>
-</html>
+</script></body>
+  </html>
